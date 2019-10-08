@@ -1,0 +1,30 @@
+{
+  "name": "@nodearch/pdf-editor",
+  "version": "00.1.0",
+  "description": "browser pdf editor for @nodearch/pdf module",
+  "main": "./dist/pdf-editor.js",
+  "devDependencies": {
+    "@babel/cli": "^7.6.2",
+    "@babel/core": "^7.6.2",
+    "babel-preset-env": "^1.7.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d dist",
+    "release": "npm run build && npm publish --access public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nodearch/pdf-editor.git"
+  },
+  "keywords": [
+    "nodearch",
+    "nodearch-pdf-editor"
+  ],
+  "author": "https://github.com/AhmedAli7O1",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/nodearch/pdf-editor/issues",
+    "email": "bluemax7o1@gmail.com"
+  }
+}

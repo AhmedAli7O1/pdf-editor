@@ -1,0 +1,12 @@
+pdf-editor {
+  padding: 0px;
+  margin: 0px;
+  position: absolute;
+}
+
+.pdf-editor-input {
+  background-color: #ececec;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
