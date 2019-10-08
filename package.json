@@ -6,11 +6,12 @@
   "devDependencies": {
     "@babel/cli": "^7.6.2",
     "@babel/core": "^7.6.2",
-    "babel-preset-env": "^1.7.0"
+    "@babel/preset-env": "^7.6.2",
+    "babel-preset-minify": "^0.5.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src -d dist",
+    "build": "babel src --copy-files -d dist",
     "release": "npm run build && npm publish --access public"
   },
   "repository": {
