@@ -4,14 +4,14 @@
   "description": "browser pdf editor for @nodearch/pdf module",
   "main": "./dist/pdf-editor.js",
   "devDependencies": {
-    "@babel/cli": "^7.6.2",
-    "@babel/core": "^7.6.2",
-    "@babel/preset-env": "^7.6.2",
-    "babel-preset-minify": "^0.5.1"
+    "css-loader": "^3.2.0",
+    "style-loader": "^1.0.0",
+    "webpack": "^4.41.0",
+    "webpack-cli": "^3.3.9"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src --copy-files -d dist",
+    "build": "webpack",
     "release": "npm run build && npm publish --access public"
   },
   "repository": {
