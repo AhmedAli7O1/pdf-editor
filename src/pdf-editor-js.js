@@ -1,4 +1,5 @@
 import { registerGlobal } from './register-global';
+import { InputBinding } from './input-binding';
 import './styles.css';
 
 export class PDFEditor {
@@ -15,6 +16,8 @@ export class PDFEditor {
       4: "inset",
       5: "solid"
     };
+
+    this.inputBinding = new InputBinding(pages);
   }
 
   render() {
@@ -22,40 +25,44 @@ export class PDFEditor {
       const page = this.pages[i];
       const pageIndex = i;
 
-      this.htmlText += '<div>';
+      this.editorElement.style.width = `${this.viewPort.width * this.scale}px`;
+      this.editorElement.style.height = `${this.viewPort.height * this.scale}px`;
+
       this.htmlText += `<img class="pdf-editor-image" src="${page.image}" style="${this.getPageImgStyle(pageIndex, this.scale)}">`;
 
       for (let y = 0; y < page.inputs.length; y++) {
         const input = page.inputs[y];
+        const inputIndex = y;
 
         const pageHeight = this.viewPort.height;
 
         if (input.type === 'textBox') {
-          this.getTextBox(input, this.scale, pageIndex, pageHeight);
+          this.getTextBox(input, this.scale, pageIndex, pageHeight, inputIndex);
         }
         else if (input.type === 'checkBox') {
-          this.getCheckBox(input, this.scale, pageIndex, pageHeight);
+          this.getCheckBox(input, this.scale, pageIndex, pageHeight, inputIndex);
         }
         else if (input.type === 'radioButton') {
-          this.getRadioButton(input, this.scale, pageIndex, pageHeight);
+          this.getRadioButton(input, this.scale, pageIndex, pageHeight, inputIndex);
         }
         else if (input.type === 'dropdown') {
-          this.getDropdown(input, this.scale, pageIndex, pageHeight);
+          this.getDropdown(input, this.scale, pageIndex, pageHeight, inputIndex);
         }
         else {
           console.error(`unsupported field type ${input.type}`);
         }
       }
-
-      this.htmlText += '</div>';
     }
 
     this.editorElement.innerHTML = this.htmlText;
+
+    this.addListeners();
   }
 
-  getTextBox(input, scale, pageIndex, pageHeight) {
+  getTextBox(input, scale, pageIndex, pageHeight, inputIndex) {
 
     this.htmlText += `<input class="pdf-editor-input" type="text" name="${input.name}" `;
+    this.htmlText += `data-page-index="${pageIndex}" data-input-index="${inputIndex}"`;
     this.htmlText += `style="${this.getFieldStyle(input, scale, pageIndex, pageHeight)}" `;
 
     if (input.value) {
@@ -165,6 +172,9 @@ export class PDFEditor {
 
     this.scale += amount;
 
+    this.editorElement.style.width = `${this.viewPort.width * this.scale}px`;
+    this.editorElement.style.height = `${this.viewPort.height * this.scale}px`;
+
     for (let i = 0; i < images.length; i++) {
       const width = this.parsePxToNum(images[i].style.width);
       const height = this.parsePxToNum(images[i].style.height);
@@ -174,7 +184,7 @@ export class PDFEditor {
 
       images[i].style.width = this.parseNumToPx(newWidth);
       images[i].style.height = this.parseNumToPx(newHeight);
-      images[i].style.top = this.parseNumToPx(newHeight * i)
+      images[i].style.top = this.parseNumToPx(newHeight * i);
     }
 
     for (let i = 0; i < inputs.length; i++) {
@@ -218,21 +228,17 @@ export class PDFEditor {
     return num + 'px';
   }
 
-  getFormData() {
+  addListeners() {
     const dataObj = {};
 
     const inputs = document.getElementsByClassName("pdf-editor-input");
 
     for (let i = 0; i < inputs.length; i++) {
+      const input = inputs[i];
 
-      if (inputs[i].type === 'radio' || inputs[i].type === 'checkbox') {
-        if (inputs[i].checked) {
-          dataObj[inputs[i].name] = inputs[i].value;
-        }
-      }
-      else {
-        dataObj[inputs[i].name] = inputs[i].value;
-      }
+      input.addEventListener('change', (event) => {
+        this.inputBinding.bind(event.target);
+      });
     }
 
     return dataObj;

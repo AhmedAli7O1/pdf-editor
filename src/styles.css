@@ -1,7 +1,7 @@
 arch-pdf-editor {
   padding: 0px;
   margin: 0px;
-  position: absolute;
+  position: relative;
 }
 
 .pdf-editor-input {
