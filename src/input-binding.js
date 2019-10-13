@@ -1,6 +1,7 @@
 export class InputBinding {
-  constructor(pdf) {
+  constructor(pdf, inputAccess) {
     this.pdf = pdf;
+    this.inputAccess = inputAccess;
   }
 
   bind(input) {
@@ -41,17 +42,18 @@ export class InputBinding {
   bindRadioButton(input, pageIndex, inputIndex) {
     const objRef = this.pdf[pageIndex].inputs[inputIndex];
 
-    if (input.checked) {
-      objRef.value = objRef.option;
-      objRef.checked = true;
-    }
-    else {
-      objRef.value = null;
-      objRef.checked = true;
-    }
+    this.inputAccess.radio.forEach(radio => {
+      if (radio.name === input.name) {
+        radio.value = objRef.option;
+        radio.checked = false;
+      }
+    });
+
+    objRef.checked = true;
   }
 
   bindDropdown(input, pageIndex, inputIndex) {
-
+    const objRef = this.pdf[pageIndex].inputs[inputIndex];
+    objRef.option = input.value;
   }
 }

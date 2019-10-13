@@ -6,6 +6,9 @@ export class PDFEditor {
   constructor(pages, scale = 1) {
     this.pages = pages;
     this.viewPort = pages[0].viewPort;
+    this.inputAccess = {
+      radio: []
+    };
     this.scale = scale;
     this.htmlText = '';
     this.editorElement = document.getElementsByTagName('arch-pdf-editor')[0];
@@ -17,7 +20,7 @@ export class PDFEditor {
       5: "solid"
     };
 
-    this.inputBinding = new InputBinding(pages);
+    this.inputBinding = new InputBinding(pages, this.inputAccess);
   }
 
   render() {
@@ -44,6 +47,7 @@ export class PDFEditor {
         }
         else if (input.type === 'radioButton') {
           this.getRadioButton(input, this.scale, pageIndex, pageHeight, inputIndex);
+          this.inputAccess.radio.push(input);
         }
         else if (input.type === 'dropdown') {
           this.getDropdown(input, this.scale, pageIndex, pageHeight, inputIndex);
