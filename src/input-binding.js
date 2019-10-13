@@ -8,13 +8,50 @@ export class InputBinding {
     const inputIndex = input.getAttribute('data-input-index');
 
     if (input.type === 'text') {
-      this.bindTextbox(input);
+      this.bindTextbox(input, pageIndex, inputIndex);
+    }
+    else if (input.type === 'checkbox') {
+      this.bindCheckbox(input, pageIndex, inputIndex);
+    }
+    else if (input.type === 'radio') {
+      this.bindRadioButton(input, pageIndex, inputIndex);
+    }
+    else if (input.tagName === 'SELECT') {
+      this.bindDropdown(input, pageIndex, inputIndex);
     }
   }
 
-  bindTextbox(input) {
+  bindTextbox(input, pageIndex, inputIndex) {
+    this.pdf[pageIndex].inputs[inputIndex] = input.value;
+  }
 
+  bindCheckbox(input, pageIndex, inputIndex) {
+    const objRef = this.pdf[pageIndex].inputs[inputIndex];
 
-    console.log('input', this.pdf[pageIndex].inputs[inputIndex]);
+    if (input.checked) {
+      objRef.value = objRef.option;
+      objRef.checked = true;
+    }
+    else {
+      objRef.value = null;
+      objRef.checked = false;
+    }
+  }
+
+  bindRadioButton(input, pageIndex, inputIndex) {
+    const objRef = this.pdf[pageIndex].inputs[inputIndex];
+
+    if (input.checked) {
+      objRef.value = objRef.option;
+      objRef.checked = true;
+    }
+    else {
+      objRef.value = null;
+      objRef.checked = true;
+    }
+  }
+
+  bindDropdown(input, pageIndex, inputIndex) {
+
   }
 }

@@ -62,7 +62,7 @@ export class PDFEditor {
   getTextBox(input, scale, pageIndex, pageHeight, inputIndex) {
 
     this.htmlText += `<input class="pdf-editor-input" type="text" name="${input.name}" `;
-    this.htmlText += `data-page-index="${pageIndex}" data-input-index="${inputIndex}"`;
+    this.htmlText += `data-page-index="${pageIndex}" data-input-index="${inputIndex}" `;
     this.htmlText += `style="${this.getFieldStyle(input, scale, pageIndex, pageHeight)}" `;
 
     if (input.value) {
@@ -72,8 +72,9 @@ export class PDFEditor {
     this.htmlText += '>';
   }
 
-  getCheckBox(input, scale, pageIndex, pageHeight) {
+  getCheckBox(input, scale, pageIndex, pageHeight, inputIndex) {
     this.htmlText += `<input class="pdf-editor-input" type="checkbox" name="${input.name}" `;
+    this.htmlText += `data-page-index="${pageIndex}" data-input-index="${inputIndex}" `;
     this.htmlText += `style="${this.getFieldStyle(input, scale, pageIndex, pageHeight)}" `;
 
     if (input.value) {
@@ -87,8 +88,9 @@ export class PDFEditor {
     this.htmlText += '>';
   }
 
-  getRadioButton(input, scale, pageIndex, pageHeight) {
+  getRadioButton(input, scale, pageIndex, pageHeight, inputIndex) {
     this.htmlText += `<input class="pdf-editor-input" type="radio" name="${input.name}" `;
+    this.htmlText += `data-page-index="${pageIndex}" data-input-index="${inputIndex}" `;
     this.htmlText += `style="${this.getFieldStyle(input, scale, pageIndex, pageHeight)}" `;
 
     if (input.option) {
@@ -102,8 +104,9 @@ export class PDFEditor {
     this.htmlText += '>';
   }
 
-  getDropdown(input, scale, pageIndex, pageHeight) {
+  getDropdown(input, scale, pageIndex, pageHeight, inputIndex) {
     this.htmlText += `<select class="pdf-editor-input" name="${input.name}" `;
+    this.htmlText += `data-page-index="${pageIndex}" data-input-index="${inputIndex}" `;
     this.htmlText += `style="${this.getFieldStyle(input, scale, pageIndex, pageHeight)}" `;
 
     if (input.option) {
