@@ -23,7 +23,7 @@ export class InputBinding {
   }
 
   bindTextbox(input, pageIndex, inputIndex) {
-    this.pdf[pageIndex].inputs[inputIndex] = input.value;
+    this.pdf[pageIndex].inputs[inputIndex].value = input.value;
   }
 
   bindCheckbox(input, pageIndex, inputIndex) {
